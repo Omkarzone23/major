@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brain Tumor Detection</title>
+
+    <style>
+   .image-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    gap: 20px; /* Adds space between the two images */
+    margin-top: 20px;
+}
+
+.image-box {
+    text-align: center;
+}
+
+.image-box img {
+    height: 300px; /* Sets a uniform height for both images */
+    width: auto;   /* Maintains the aspect ratio */
+}
+
+.tumor-info {
+    flex-basis: 100%;
+    text-align: center;
+    margin-top: 20px;
+}
+
+    </style>
+</head>
+<body>
+    <h1>Brain Tumor Detection</h1>
+    <form action="/" method="POST" enctype="multipart/form-data">
+        <label for="image">Upload an image:</label>
+        <input type="file" name="image" accept="image/*" required>
+
+        <label for="operation">Select an operation:</label>
+        <select name="operation" required>
+            <option value="grayscale">Grayscale</option>
+            <option value="median_filter">Median Filter</option>
+            <option value="high_pass_filter">High Pass Filter</option>
+            <option value="watershed_segmentation">Watershed Segmentation</option>
+            <option value="morphological_operations">Morphological Operations</option>
+            <option value="locate_tumor_area">Locate Tumor Area</option>
+            <option value="plot_tumor_boundary">Plot Tumor Boundary</option>
+        </select>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <div class="image-container">
+        {% if input_image and output_image %}
+            <div class="image-box">
+                <h2>Original Image:</h2>
+                <img src="{{ input_image }}" alt="Input Image" width="400">
+            </div>
+            <div class="image-box">
+                <h2>Processed Image:</h2>
+                <img src="{{ output_image }}" alt="Output Image" width="400">
+            </div>
+            <div class="tumor-info">
+                {% if tumor_area %}
+                    <h3>Tumor Area: {{ tumor_area }} pixels</h3>
+                {% endif %}
+                {% if tumor_perimeter %}
+                    <h3>Tumor Perimeter: {{ tumor_perimeter }} pixels</h3>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+    
+</body>
+</html>
